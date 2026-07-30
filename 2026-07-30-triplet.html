@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Gameplan · Rope / AbMat / Bike — Kyle Garzia</title>
+<title>3 RFT Rope / AbMat / Bike — Kyle Garzia</title>
 <style>
   :root{
     color-scheme: light dark;
     --surface-1:#fcfcfb; --page:#f9f9f7;
     --text-primary:#0b0b0b; --text-secondary:#52514e; --muted:#898781;
     --grid:#e1e0d9; --baseline:#c3c2b7; --border:rgba(11,11,11,0.10);
-    --rope:#4a3aa7; --ab:#1baf7a; --bike:#2a78d6;
+    --rope:#eb6834; --ab:#1baf7a; --bike:#2a78d6;
     --good:#0ca30c; --warn:#fab219; --crit:#d03b3b; --success-text:#006300;
     --card-shadow:0 1px 2px rgba(11,11,11,.05),0 1px 12px rgba(11,11,11,.04);
   }
@@ -19,7 +19,7 @@
       --surface-1:#1a1a19; --page:#0d0d0d;
       --text-primary:#fff; --text-secondary:#c3c2b7; --muted:#898781;
       --grid:#2c2c2a; --baseline:#383835; --border:rgba(255,255,255,0.10);
-      --rope:#9085e9; --ab:#199e70; --bike:#3987e5;
+      --rope:#d95926; --ab:#199e70; --bike:#3987e5;
       --good:#0ca30c; --warn:#fab219; --crit:#d03b3b; --success-text:#0ca30c;
       --card-shadow:0 1px 2px rgba(0,0,0,.4),0 1px 14px rgba(0,0,0,.35);
     }
@@ -28,15 +28,13 @@
     --surface-1:#1a1a19; --page:#0d0d0d;
     --text-primary:#fff; --text-secondary:#c3c2b7; --muted:#898781;
     --grid:#2c2c2a; --baseline:#383835; --border:rgba(255,255,255,0.10);
-    --rope:#9085e9; --ab:#199e70; --bike:#3987e5;
+    --rope:#d95926; --ab:#199e70; --bike:#3987e5;
     --good:#0ca30c; --warn:#fab219; --crit:#d03b3b; --success-text:#0ca30c;
     --card-shadow:0 1px 2px rgba(0,0,0,.4),0 1px 14px rgba(0,0,0,.35);
   }
   *{box-sizing:border-box}
   html,body{margin:0}
-  body{background:var(--page); color:var(--text-primary);
-    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
-    -webkit-font-smoothing:antialiased; line-height:1.5; padding:28px 20px 64px;}
+  body{background:var(--page); color:var(--text-primary);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;-webkit-font-smoothing:antialiased; line-height:1.5; padding:28px 20px 64px;}
   .wrap{max-width:1080px;margin:0 auto}
   .backlink{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;margin-bottom:14px}
   .backlink:hover{color:var(--text-primary)}
@@ -46,48 +44,58 @@
   .meta{color:var(--text-secondary);font-size:14px}
   .meta b{color:var(--text-primary);font-weight:600}
   .badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 11px;border-radius:999px}
+  .badge.completed{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--success-text)}
   .badge.planned{background:color-mix(in srgb,var(--warn) 22%,transparent);color:#8a5a00}
   :root[data-theme="dark"] .badge.planned{color:var(--warn)}
+  .btwb-link{display:inline-flex;align-items:center;gap:6px;margin-top:9px;font-size:13px;font-weight:600;color:var(--bike);text-decoration:none;border:1px solid var(--border);border-radius:999px;padding:6px 13px;background:var(--surface-1)}
+  .btwb-link:hover{text-decoration:underline}
   .toggle{border:1px solid var(--border);background:var(--surface-1);color:var(--text-secondary);border-radius:999px;padding:7px 14px;font-size:13px;cursor:pointer;font-family:inherit}
   .toggle:hover{color:var(--text-primary)}
   .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:22px 0}
   .tile{background:var(--surface-1);border:1px solid var(--border);border-radius:14px;padding:16px 18px;box-shadow:var(--card-shadow)}
   .tile .k{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
-  .tile .v{font-size:30px;font-weight:750;margin-top:4px;letter-spacing:-.02em;color:var(--muted)}
+  .tile .v{font-size:30px;font-weight:750;margin-top:4px;letter-spacing:-.02em}
+  .tile .v small{font-size:15px;color:var(--text-secondary);font-weight:600}
   .tile .sub{font-size:12.5px;color:var(--text-secondary);margin-top:3px}
-  .card{background:var(--surface-1);border:1px solid var(--border);border-radius:16px;padding:20px 22px 18px;box-shadow:var(--card-shadow);margin-bottom:18px}
-  .card h2{font-size:15px;font-weight:700;margin:0 0 4px}
-  .card p.lead{font-size:14px;color:var(--text-secondary);margin:0 0 6px}
+  .tile .sub .hit{color:var(--success-text);font-weight:700}
+  .tile .sub .miss{color:var(--crit);font-weight:700}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media (max-width:820px){.grid2{grid-template-columns:1fr}}
+  .card{background:var(--surface-1);border:1px solid var(--border);border-radius:16px;padding:20px 20px 18px;box-shadow:var(--card-shadow);margin-bottom:18px}
+  .card h2{font-size:15px;font-weight:700;margin:0 0 2px}
+  .card .desc{font-size:13px;color:var(--text-secondary);margin:0 0 14px}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;margin:0 0 12px;font-size:13px;color:var(--text-secondary)}
+  .legend span{display:inline-flex;align-items:center;gap:7px}
+  .dot{width:11px;height:11px;border-radius:3px;display:inline-block}
+  svg{display:block;width:100%;height:auto;overflow:visible}
+  .ax{fill:var(--muted);font-size:11px}
+  .axlab{fill:var(--muted);font-size:11px}
+  .vlab{fill:var(--text-secondary);font-size:10.5px;font-weight:600;font-variant-numeric:tabular-nums}
   .sectlabel{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:34px 0 12px}
-  .rule{background:color-mix(in srgb,var(--bike) 9%,var(--surface-1));border:1px solid color-mix(in srgb,var(--bike) 32%,var(--border));border-radius:16px;padding:18px 20px;font-size:15px;margin-bottom:18px}
-  .rule .lbl{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--bike);margin-bottom:5px}
-  .rule b{color:var(--text-primary)}
-  .checklist{list-style:none;padding:0;margin:0}
-  .checklist li{position:relative;padding:7px 0 7px 26px;font-size:14px;color:var(--text-secondary);border-bottom:1px solid var(--grid)}
-  .checklist li:last-child{border-bottom:0}
-  .checklist li:before{content:"○";position:absolute;left:2px;top:7px;color:var(--muted);font-size:15px}
-  .checklist li b{color:var(--text-primary);font-weight:650}
-  .gp-move{padding:13px 0;border-bottom:1px solid var(--grid)}
-  .gp-move:last-child{border-bottom:0}
-  .gp-move .mh{font-size:14px;font-weight:700;margin:0 0 3px;display:flex;align-items:center;gap:8px}
-  .gp-move .mh .dot{width:10px;height:10px;border-radius:3px;display:inline-block}
-  .gp-move p{margin:0;font-size:13.5px;color:var(--text-secondary)}
-  .tcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-  .tcard{background:var(--surface-1);border:1px solid var(--border);border-radius:14px;padding:15px 17px;box-shadow:var(--card-shadow);border-left:3px solid var(--bike)}
-  .tcard .k{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
-  .tcard .v{font-size:19px;font-weight:750;margin:5px 0 3px;letter-spacing:-.01em}
-  .tcard .sub{font-size:12.5px;color:var(--text-secondary)}
-  .takeaway{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--grid)}
-  .takeaway:last-child{border-bottom:0}
-  .takeaway p{margin:0;font-size:13.5px;color:var(--text-secondary)}
-  .takeaway p b{color:var(--text-primary);font-weight:650}
-  .pill{flex:0 0 auto;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 9px;border-radius:999px;height:fit-content;margin-top:1px}
-  .pill.flag{background:color-mix(in srgb,var(--warn) 22%,transparent);color:#8a5a00}
-  .pill.ok{background:color-mix(in srgb,var(--good) 16%,transparent);color:var(--success-text)}
-  .pill.info{background:color-mix(in srgb,var(--bike) 16%,transparent);color:var(--bike)}
-  :root[data-theme="dark"] .pill.flag{color:var(--warn)}
-  .placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:120px;border:1.5px dashed var(--grid);border-radius:14px;color:var(--muted);font-size:13.5px;text-align:center;padding:22px;gap:4px}
-  .placeholder .big{font-size:15px;font-weight:650;color:var(--text-secondary)}
+  .notes{background:var(--surface-1);border:1px solid var(--border);border-radius:16px;padding:22px 24px;box-shadow:var(--card-shadow)}
+  .analysis h3{font-size:15px;font-weight:700;margin:22px 0 6px;color:var(--text-primary)}
+  .analysis h3:first-child{margin-top:0}
+  .analysis p{font-size:14px;color:var(--text-secondary);margin:0 0 11px}
+  .analysis p b,.analysis strong{color:var(--text-primary);font-weight:650}
+  .analysis em{font-style:italic}
+  /* plan vs actual */
+  .pva{width:100%;border-collapse:collapse;font-size:13.5px}
+  .pva th,.pva td{text-align:left;padding:11px 10px;border-bottom:1px solid var(--grid);vertical-align:top}
+  .pva th{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:600}
+  .pva td.tgt{color:var(--text-primary);font-weight:650}
+  .pva td.num{font-variant-numeric:tabular-nums}
+  .pva .v-hit,.pva .v-miss{font-weight:700;white-space:nowrap}
+  .pva .v-hit{color:var(--success-text)} .pva .v-miss{color:var(--crit)}
+  /* frozen gameplan */
+  .frozen{border:1px dashed color-mix(in srgb,var(--muted) 55%,var(--border));border-radius:16px;padding:20px 22px;background:color-mix(in srgb,var(--muted) 5%,var(--surface-1))}
+  .frozen .stamp{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--muted);margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .frozen h3{font-size:14px;margin:16px 0 5px} .frozen h3:first-of-type{margin-top:0}
+  .frozen p{font-size:13.5px;color:var(--text-secondary);margin:0 0 9px}
+  .frozen p b{color:var(--text-primary);font-weight:650}
+  .anotes p{border-left:3px solid var(--bike);padding:3px 0 3px 14px;margin:0 0 13px;font-size:14px;color:var(--text-secondary)}
+  .anotes p:last-child{margin-bottom:0}
+  .anotes p b{color:var(--text-primary);font-weight:650}
+  .anotes .who{font-size:11px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;color:var(--bike);margin-bottom:12px}
   .foot{margin-top:30px;color:var(--muted);font-size:12px;text-align:center}
 </style>
 </head>
@@ -96,92 +104,168 @@
   <a class="backlink" href="index.html">‹ Overview</a>
   <header class="top">
     <div>
-      <h1>Kyle Garzia · Gameplan</h1>
-      <div class="wod-title">3 RFT · Rope / AbMat / Bike <span class="badge planned">Planned</span></div>
-      <div class="meta">Thu · July 30, 2026 · Hungry Dogs Palo Alto · Linchpin "Wild Card"<br>
-        <b>Your version:</b> 3 rounds for time — 75 jump rope (any style) · 25 AbMat sit-ups · 25 cal Echo bike</div>
+      <h1>Kyle Garzia · Workout</h1>
+      <div class="wod-title">3 RFT · Rope / AbMat / Bike <span class="badge completed">Completed</span></div>
+      <div class="meta">Thu · July 30, 2026 · Hungry Dogs Palo Alto · WOD #890 · Linchpin<br>
+        <b>75 jump rope · 25 AbMat sit-ups · 25 cal Echo bike</b> · 3 rounds for time · <b>14:54 Rx'd</b></div>
+      <a class="btwb-link" href="https://beyondthewhiteboard.com/workout_sessions/130505869" target="_blank" rel="noopener">↗ View full result on BeyondTheWhiteboard</a>
     </div>
     <button class="toggle" id="themeBtn">◐ Theme</button>
   </header>
 
   <div class="tiles">
-    <div class="tile"><div class="k">Total time</div><div class="v">—</div><div class="sub">awaiting results</div></div>
-    <div class="tile"><div class="k">R3 vs R1 bike</div><div class="v">—</div><div class="sub">even-pace test</div></div>
-    <div class="tile"><div class="k">Avg / Max HR</div><div class="v">—</div><div class="sub">awaiting results</div></div>
-    <div class="tile"><div class="k">RPE</div><div class="v">—</div><div class="sub">1–10, post-workout</div></div>
-  </div>
-
-  <div class="sectlabel">Coach's gameplan</div>
-  <div class="rule">
-    <div class="lbl">The one rule</div>
-    <b>The bike is the dial.</b> Pick a calorie pace you can <b>repeat three times</b> and hold it. This is the McGhee lesson applied — you sandbagged that middle and had a gear left at the end. Even beats fast. Moderate and repeatable on rounds 1–2, then empty the tank on the round-3 bike.
-  </div>
-
-  <div class="card">
-    <h2>Before you start</h2>
-    <ul class="checklist">
-      <li><b>Connect the Echo bike over Bluetooth</b> so Tempus counts your calories — that's your one hard data stream today.</li>
-      <li><b>Rope out a few reps</b> to find your rhythm and let the Achilles / calves warm in before round 1.</li>
-      <li><b>Tap promptly at each transition</b> so the rope → sit-up → bike splits stay clean (splits are tap-driven, not auto-counted).</li>
-    </ul>
-  </div>
-
-  <div class="card">
-    <h2>How to run each piece</h2>
-    <div class="gp-move">
-      <div class="mh"><span class="dot" style="background:var(--rope)"></span>75 Jump rope — any style</div>
-      <p>Smooth and continuous, unbroken or 25/25/25. Land soft and midfoot. This is the only spot your limiters live — if the Achilles or calves start talking, break to smaller sets rather than pushing through. No sprinting; it's not where the workout is won.</p>
-    </div>
-    <div class="gp-move">
-      <div class="mh"><span class="dot" style="background:var(--ab)"></span>25 AbMat sit-ups</div>
-      <p>Steady, unbroken, anchor your feet. Treat this as your relative rest between the two engine pieces — don't spike your heart rate here.</p>
-    </div>
-    <div class="gp-move">
-      <div class="mh"><span class="dot" style="background:var(--bike)"></span>25 cal Echo bike</div>
-      <p>The lever. Moderate and repeatable rounds 1–2, then empty the tank on round 3. This is where you spend whatever you've got left — and the one segment with real counted data.</p>
-    </div>
-  </div>
-
-  <div class="sectlabel">Targets — I'll grade these after</div>
-  <div class="tcards">
-    <div class="tcard"><div class="k">Total time</div><div class="v">14–17 min</div><div class="sub">controlled aerobic effort · sub-13 only if you consciously race the bike</div></div>
-    <div class="tcard"><div class="k">Even-pace test</div><div class="v">R3 bike within ~15s of R1</div><div class="sub">real Echo data, not taps — the test McGhee failed</div></div>
-    <div class="tcard"><div class="k">Effort</div><div class="v">Repeatable, not redlined</div><div class="sub">hold a pace you could do a 4th round of</div></div>
-  </div>
-
-  <div class="sectlabel">Limiter watch</div>
-  <div class="card">
-    <div class="takeaway"><span class="pill flag">Watch</span><p><b>Jump-rope impact is the one flag.</b> 225 total ground contacts on a recently-returned Achilles / knees. Land soft, and break the rope to 25/25/25 if the calves or Achilles talk. This is the injury-relevant load today — not the sit-ups or bike.</p></div>
-    <div class="takeaway"><span class="pill ok">Safe</span><p><b>AbMat over GHD protects your back</b> — and your history backs it: no GHD sit-ups since 2020. Correct call.</p></div>
-    <div class="takeaway"><span class="pill ok">Safe</span><p><b>Shoulder load is minimal</b> here. No overhead, no pressing.</p></div>
-  </div>
-
-  <div class="sectlabel">History with these movements</div>
-  <div class="card">
-    <div class="takeaway"><span class="pill info">Rope</span><p>Last double-unders were <b>June 2025 — 14 months ago</b>. Any-style singles is the smart call; Rx DUs would just mean trip-ups.</p></div>
-    <div class="takeaway"><span class="pill info">Sit-ups</span><p>No GHD since <b>July 2020 (6 years)</b> — hence the AbMat swap. Sit-ups in general are well within reach (106 sessions).</p></div>
-    <div class="takeaway"><span class="pill info">Bike</span><p>Your strength here: <b>66 bike sessions, 6 in July alone</b>. The pacing lever is also your best-grooved movement — trust it.</p></div>
-    <div class="takeaway"><span class="pill info">This combo</span><p>Rope + sit-up + bike has come up <b>3 times</b> before (2024–2025). No Tempus round data on those, so today is the first clean baseline for the pattern.</p></div>
+    <div class="tile"><div class="k">Total time</div><div class="v">14:54</div><div class="sub"><span class="hit">✓ hit</span> · target 14–17 min</div></div>
+    <div class="tile"><div class="k">Bike fade R1→R3</div><div class="v">+41<small>s</small></div><div class="sub"><span class="miss">✗ miss</span> · target ≤15s</div></div>
+    <div class="tile"><div class="k">Avg / Max HR</div><div class="v">148 <small>/ 162</small></div><div class="sub">controlled · no blow-up</div></div>
+    <div class="tile"><div class="k">Total cals</div><div class="v">135</div><div class="sub">57% earned on the bike</div></div>
   </div>
 
   <div class="sectlabel">Plan vs actual</div>
-  <div class="card" style="margin-top:0">
-    <div class="placeholder"><span class="big">Populated after you train</span>Upload your Tempus screenshots (or a quick RPE + splits debrief) and each target above gets graded — planned vs actual, hit or miss.</div>
+  <div class="notes" style="margin-bottom:18px">
+    <table class="pva">
+      <thead><tr><th style="width:26%">Target (set before)</th><th style="width:22%">Planned</th><th style="width:30%">Actual</th><th style="width:14%">Verdict</th></tr></thead>
+      <tbody>
+        <tr><td class="tgt">Total time</td><td>14–17 min, controlled</td><td class="num">14:54</td><td class="v-hit">✓ Hit</td></tr>
+        <tr><td class="tgt">Bike even-pace<br><span style="color:var(--muted);font-weight:400">R3 within ~15s of R1</span></td><td>≤ 15s drift</td><td class="num">+41s &nbsp;<span style="color:var(--muted)">(2:26 → 2:57 → 3:07)</span></td><td class="v-miss">✗ Miss</td></tr>
+        <tr><td class="tgt">Repeatable effort<br><span style="color:var(--muted);font-weight:400">a pace you could 4th-round</span></td><td>even rounds</td><td class="num">4:16 → 5:22 → 5:16<br><span style="color:var(--muted)">front-loaded R1</span></td><td class="v-miss">✗ Miss</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:13.5px;color:var(--text-secondary);margin:14px 0 0"><b style="color:var(--text-primary)">One-line read:</b> right effort, wrong distribution — the mirror image of McGhee. You opened the bike ~30% too hot and paid it back over rounds 2–3.</p>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h2>Round pacing</h2>
+      <p class="desc">Time per round, split by movement. Round 1 (🔥) went out fast; rounds 2–3 slowed — real bike fade plus some bike→rope transition time (see notes).</p>
+      <div class="legend">
+        <span><i class="dot" style="background:var(--rope)"></i>Jump Rope</span>
+        <span><i class="dot" style="background:var(--ab)"></i>AbMat Sit-up</span>
+        <span><i class="dot" style="background:var(--bike)"></i>Air Bike</span>
+      </div>
+      <svg id="roundsChart" viewBox="0 0 520 300" role="img" aria-label="Round pacing"></svg>
+    </div>
+    <div class="card">
+      <h2>Bike pace by round <span style="font-size:11px;font-weight:700;color:var(--crit);background:color-mix(in srgb,var(--crit) 14%,transparent);padding:2px 8px;border-radius:8px">the fade</span></h2>
+      <p class="desc">Time for 25 cal each round. Dashed line = round-1 pace + the 15s target band. You drifted 41s past it.</p>
+      <svg id="bikeChart" viewBox="0 0 520 300" role="img" aria-label="Bike pace by round"></svg>
+    </div>
+  </div>
+
+  <div class="grid2">
+    <div class="card">
+      <h2>Heart rate by round</h2>
+      <p class="desc">Avg and max HR climbed each round but never redlined (max 162 vs 171 in McGhee). A controlled effort.</p>
+      <div class="legend">
+        <span><i class="dot" style="background:var(--bike)"></i>Avg BPM</span>
+        <span><i class="dot" style="background:var(--crit)"></i>Max BPM</span>
+      </div>
+      <svg id="hrChart" viewBox="0 0 520 300" role="img" aria-label="HR by round"></svg>
+    </div>
+    <div class="card">
+      <h2>Where the time went</h2>
+      <p class="desc">The bike was 57% of the workout — as expected, the engine piece and the pacing lever.</p>
+      <svg id="splitChart" viewBox="0 0 520 300" role="img" aria-label="Movement split"></svg>
+    </div>
+  </div>
+
+  <div class="sectlabel">Analysis</div>
+  <div class="notes analysis">
+    <h3>The verdict</h3>
+    <p>Strong session — <b>14:54, dead center of your 14–17 target</b>, HR controlled the whole way, no blow-up. As a controlled aerobic piece the day after a rest day, this did its job. But the pacing target you missed is the interesting part, because it's the <b>exact mirror of McGhee</b>: there you went out too slow and finished with a gear left; here you went out too <em>fast</em> and faded. Two workouts, two opposite errors, one root cause — <b>your pace-by-feel instinct misleads you at the start of a piece.</b></p>
+    <h3>The bike told on you</h3>
+    <p>I said the bike was the dial and to keep it repeatable. Your bike splits: <b>2:25.6 → 2:56.8 → 3:06.5</b>. That's a 41-second positive split — you opened ~30% hotter than you could hold and bled it back over the next two rounds. That round-1 bike (2:26) is the "devil himself is chasing you" pace Pat warned about. It felt fast and free in the moment; it wasn't.</p>
+    <h3>The bike was the wall — confirmed in your words</h3>
+    <p>Your own account nails it: you came out hot on the round-1 bike and slowly bled the pace, then rounds 2–3 you "hit the wall" with major quad burn — backing off, catching yourself, surging in bursts, backing off again. That ragged surge-and-fade is the signature of a too-fast open: once the quads went, you couldn't hold a line, so you paid in stop-start pacing. The bike splits confirm it — <b>2:26 → 2:57 → 3:07</b> — and the fade was <b>local (quads), not cardiac</b>: your HR stayed controlled the whole time. Same theme as McGhee's push-ups — your engine is fine, but when you over-pace early, the specific driver muscle (chest there, quads here) is what walls out.</p>
+    <p><b>One correction from your notes, and a good data catch:</b> that 80-second round-2 jump rope wasn't a performance crater — it's a Tempus transition artifact. The bike hits 25 cal, Tempus instantly logs it and advances to the next round's rope <em>before you've walked over</em>, so the walk-over got counted into the rope split. Your rope was actually near-flawless all day: deliberate 25/25/25 sets by choice, and in round 3 you went for unbroken and only tripped at rep 53. Rope and sit-ups went exactly to plan. Worth remembering for every future read: <b>the first movement of each round after the bike will read slow because it's eating the transition</b> — I'll discount that going forward.</p>
+    <h3>What went right</h3>
+    <p><b>Your engine was controlled and honest.</b> Max HR 162 (vs 171 in McGhee), average 148, and it climbed cleanly 143 → 152 → 156 across rounds without spiking into a forced stop. This wasn't a cardio blow-up — you had the fitness. The gap was purely distribution. And the movement choices held up: AbMat sit-ups stayed steady (1:02 / 1:05 / 1:11 — minimal fade), and the bike, your best-grooved movement, carried 57% of the work exactly as expected.</p>
+    <h3>The fix (now doubly confirmed)</h3>
+    <p>Same lesson as McGhee, and now you've proven it twice: <b>pick your pace before rep 1 and hold it — especially on the monostructural piece.</b> For this workout, the right open was a bike around <b>2:50</b>, not 2:25. If you can honestly picture doing a 4th round at your round-1 pace, you paced it right; if round 1 feels notably easier than you expected the finish to, you're going out too hot. Even pacing here likely would have killed the round-2 crater and put you around 14:30 without feeling worse — but more importantly, it builds the pacing discipline that's now your clearest recurring gap.</p>
+    <h3>The trend worth naming</h3>
+    <p>Across two sessions, your fitness isn't the limiter — your <b>pacing discipline</b> is. McGhee: too slow early. Today: too fast early. That's now a KPI worth tracking on its own. Next controlled piece, the win condition isn't the clock — it's three splits within ~15s of each other. Hit that and the clock takes care of itself.</p>
+  </div>
+
+  <div class="sectlabel">Coach's gameplan · as set before the workout (frozen)</div>
+  <div class="frozen">
+    <div class="stamp">🔒 Locked pre-workout — this is what was advised before you knew the result</div>
+    <h3>The one rule</h3>
+    <p><b>The bike is the dial.</b> Pick a calorie pace you can repeat three times and hold it. Moderate and repeatable on rounds 1–2, then empty the tank on the round-3 bike. <em>(Verdict: you inverted it — went hot on round 1 instead of holding repeatable.)</em></p>
+    <h3>How to run each piece</h3>
+    <p><b>75 jump rope</b> — smooth and continuous, unbroken or 25/25/25, land soft. <b>25 AbMat</b> — steady, unbroken, your relative rest. <b>25 cal bike</b> — moderate/repeatable rounds 1–2, empty the tank round 3.</p>
+    <h3>Targets set</h3>
+    <p>Total 14–17 min controlled · R3 bike within ~15s of R1 · a repeatable, not-redlined effort.</p>
   </div>
 
   <div class="sectlabel">Athlete notes</div>
-  <div class="card" style="margin-top:0">
-    <div class="placeholder"><span class="big">Your voice goes here</span>How did it feel, where did you break, what surprised you? Send it over after and I'll add it alongside the coaching analysis.</div>
+  <div class="notes anotes" style="margin-top:0">
+    <div class="who">— Kyle, in his own words</div>
+    <p><b>Achilles / knees:</b> felt great, zero issues. Achilles is normally fine — I'd just flagged it beforehand out of caution.</p>
+    <p><b>Rope:</b> broke everything into 25s on purpose. Round 1 I knew I could go unbroken but stuck to the 25s; round 3 I went for unbroken and tripped at rep 53, otherwise would've had it. Felt fine throughout. The slow round-2 rope split was probably the bike→rope transition — Tempus starts the next movement the instant the bike finishes, before I'd even walked to the rope.</p>
+    <p><b>The bike:</b> that's what hit me. I like the bike normally. I came out hot in round 1 and slowly slowed my pace. Rounds 2–3 were more dramatic — I didn't stop, but I hit the wall with major quad burn. I'd back off, catch myself, keep pumping slower, then speed up in bursts and back off again.</p>
   </div>
 
-  <div class="foot">Planned · awaiting results · Linchpin programming (Pat Sherwood)</div>
+  <div class="foot">Completed · graded vs pre-workout plan · Tempus + Echo (Bluetooth) data · WOD #890</div>
 </div>
 
 <script>
+const W={
+  rounds_data:[
+    {r:1,rope:48.5,ab:61.8,bike:145.6,avg:143,max:155},
+    {r:2,rope:80.3,ab:64.8,bike:176.8,avg:152,max:159},
+    {r:3,rope:57.9,ab:71.4,bike:186.5,avg:156,max:162}
+  ],
+  movementTotals:{rope:186.9, ab:198.0, bike:508.9}
+};
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const fmt = s => { s=Math.round(s); return Math.floor(s/60)+":"+String(s%60).padStart(2,"0"); };
+const NS="http://www.w3.org/2000/svg";
+function el(t,a){const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+function clear(id){const s=document.getElementById(id);while(s.firstChild)s.removeChild(s.firstChild);return s;}
+
+function drawRounds(){
+  const s=clear("roundsChart"),W0=520,H=300,L=40,R=14,T=14,B=52;
+  const data=W.rounds_data,n=data.length,yMax=360;
+  const x=i=>L+i*((W0-L-R)/n)+((W0-L-R)/n)*0.22, bw=((W0-L-R)/n)*0.56, y=v=>T+(H-T-B)*(1-v/yMax);
+  for(let g=0; g<=yMax; g+=90){s.appendChild(el("line",{x1:L,x2:W0-R,y1:y(g),y2:y(g),stroke:css("--grid"),"stroke-width":1}));const tx=el("text",{x:L-6,y:y(g)+3,"text-anchor":"end",class:"ax"});tx.textContent=fmt(g);s.appendChild(tx);}
+  data.forEach((d,i)=>{
+    let acc=0;[["rope",css("--rope")],["ab",css("--ab")],["bike",css("--bike")]].forEach(([key,col])=>{const v=d[key];const y0=y(acc),y1=y(acc+v);s.appendChild(el("rect",{x:x(i),y:y1,width:bw,height:Math.max(0,y0-y1-2),fill:col,rx:2}));acc+=v;});
+    const tot=d.rope+d.ab+d.bike;const lab=el("text",{x:x(i)+bw/2,y:y(tot)-5,"text-anchor":"middle",class:"vlab"});lab.textContent=fmt(tot);s.appendChild(lab);
+    const rx=el("text",{x:x(i)+bw/2,y:H-B+17,"text-anchor":"middle",class:"axlab"});rx.textContent=(i===0?"Round 1 🔥":"Round "+d.r);s.appendChild(rx);
+  });
+}
+function drawBike(){
+  const s=clear("bikeChart"),W0=520,H=300,L=40,R=14,T=14,B=52;
+  const data=W.rounds_data,n=data.length,yMax=210;
+  const x=i=>L+i*((W0-L-R)/n)+((W0-L-R)/n)*0.24, bw=((W0-L-R)/n)*0.52, y=v=>T+(H-T-B)*(1-v/yMax);
+  for(let g=0; g<=yMax; g+=30){s.appendChild(el("line",{x1:L,x2:W0-R,y1:y(g),y2:y(g),stroke:css("--grid"),"stroke-width":1}));const tx=el("text",{x:L-6,y:y(g)+3,"text-anchor":"end",class:"ax"});tx.textContent=fmt(g);s.appendChild(tx);}
+  const r1=data[0].bike, band=y(r1), bandTop=y(r1+15);
+  s.appendChild(el("rect",{x:L,y:bandTop,width:W0-R-L,height:band-bandTop,fill:css("--good"),opacity:.12}));
+  s.appendChild(el("line",{x1:L,x2:W0-R,y1:band,y2:band,stroke:css("--good"),"stroke-width":1.5,"stroke-dasharray":"5 4"}));
+  const tl=el("text",{x:L+3,y:T+11,"text-anchor":"start",class:"vlab",fill:css("--good")});tl.textContent="target band = R1 pace + 15s";s.appendChild(tl);
+  data.forEach((d,i)=>{const over=d.bike>r1+15;s.appendChild(el("rect",{x:x(i),y:y(d.bike),width:bw,height:(H-T-B)*(d.bike/yMax),fill:over?css("--crit"):css("--bike"),rx:2}));const lab=el("text",{x:x(i)+bw/2,y:y(d.bike)-5,"text-anchor":"middle",class:"vlab"});lab.textContent=fmt(d.bike);s.appendChild(lab);const rx=el("text",{x:x(i)+bw/2,y:H-B+17,"text-anchor":"middle",class:"axlab"});rx.textContent="Round "+d.r;s.appendChild(rx);});
+}
+function drawHR(){
+  const s=clear("hrChart"),W0=520,H=300,L=38,R=16,T=14,B=52;
+  const data=W.rounds_data,n=data.length,yMin=130,yMax=170;
+  const x=i=>L+i*((W0-L-R)/(n-1)), y=v=>T+(H-T-B)*(1-(v-yMin)/(yMax-yMin));
+  for(let g=130; g<=170; g+=10){s.appendChild(el("line",{x1:L,x2:W0-R,y1:y(g),y2:y(g),stroke:css("--grid"),"stroke-width":1}));const tx=el("text",{x:L-6,y:y(g)+3,"text-anchor":"end",class:"ax"});tx.textContent=g;s.appendChild(tx);}
+  const line=(key,col)=>{let dstr=data.map((d,i)=>(i?"L":"M")+x(i).toFixed(1)+" "+y(d[key]).toFixed(1)).join(" ");s.appendChild(el("path",{d:dstr,fill:"none",stroke:col,"stroke-width":2.4,"stroke-linejoin":"round"}));data.forEach((d,i)=>{s.appendChild(el("circle",{cx:x(i),cy:y(d[key]),r:4,fill:col,stroke:css("--surface-1"),"stroke-width":1.5}));const t=el("text",{x:x(i),y:y(d[key])-9,"text-anchor":"middle",class:"vlab",fill:col});t.textContent=d[key];s.appendChild(t);});};
+  line("max",css("--crit")); line("avg",css("--bike"));
+  data.forEach((d,i)=>{const rx=el("text",{x:x(i),y:H-B+17,"text-anchor":"middle",class:"axlab"});rx.textContent="Round "+d.r;s.appendChild(rx);});
+}
+function drawSplit(){
+  const s=clear("splitChart"),W0=520,H=300,L=90,R=64,T=24,B=24;
+  const rows=[["Air Bike",W.movementTotals.bike,css("--bike")],["AbMat",W.movementTotals.ab,css("--ab")],["Jump Rope",W.movementTotals.rope,css("--rope")]];
+  const tot=rows.reduce((a,r)=>a+r[1],0),maxV=Math.max(...rows.map(r=>r[1])),bh=42,gap=((H-T-B)-rows.length*bh)/(rows.length-1);
+  rows.forEach((r,i)=>{const yy=T+i*(bh+gap),w=(W0-L-R)*(r[1]/maxV);s.appendChild(el("rect",{x:L,y:yy,width:w,height:bh,fill:r[2],rx:4}));const nm=el("text",{x:L-10,y:yy+bh/2+4,"text-anchor":"end",class:"vlab"});nm.textContent=r[0];s.appendChild(nm);const vl=el("text",{x:L+w+8,y:yy+bh/2+4,class:"vlab"});vl.textContent=fmt(r[1]);s.appendChild(vl);const pl=el("text",{x:L+8,y:yy+bh/2+4,class:"vlab",fill:"#fff"});pl.textContent=Math.round(r[1]/tot*100)+"%";s.appendChild(pl);});
+}
+function drawAll(){drawRounds();drawBike();drawHR();drawSplit();}
+drawAll();
 document.getElementById("themeBtn").addEventListener("click",()=>{
   const cur=document.documentElement.getAttribute("data-theme");
   const mqDark=window.matchMedia("(prefers-color-scheme: dark)").matches;
   document.documentElement.setAttribute("data-theme", cur ? (cur==="dark"?"light":"dark") : (mqDark?"light":"dark"));
+  drawAll();
 });
 </script>
 </body>

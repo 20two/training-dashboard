@@ -89,7 +89,7 @@
     <div>
       <h1>Kyle Garzia · Training</h1>
       <div class="wod-title">Overview</div>
-      <div class="meta">889 sessions since Nov 2017 · Hungry Dogs Palo Alto · CrossFit Linchpin</div>
+      <div class="meta">890 sessions since Nov 2017 · Hungry Dogs Palo Alto · CrossFit Linchpin</div>
     </div>
     <button class="toggle" id="themeBtn">◐ Theme</button>
   </header>
@@ -120,18 +120,18 @@ function clear(id){const s=document.getElementById(id);while(s.firstChild)s.remo
 
 /* overview tiles */
 const TILES=[
-  {k:"Sessions logged",v:"889",sub:"since Nov 2017"},
-  {k:"2026 so far",v:"47",sub:"rebuilding consistency"},
-  {k:"Strongest month",v:"20",sub:"Jul '26 · best since May '25"},
-  {k:"Focus now",v:"Push-ups + engine",sub:"current priorities",txt:true}
+  {k:"Sessions logged",v:"890",sub:"since Nov 2017"},
+  {k:"2026 so far",v:"48",sub:"rebuilding consistency"},
+  {k:"Strongest month",v:"21",sub:"Jul '26 · best since May '25"},
+  {k:"Focus now",v:"Pacing + engine",sub:"current priorities",txt:true}
 ];
 document.getElementById("tiles").innerHTML = TILES.map(t=>
   `<div class="tile"><div class="k">${t.k}</div><div class="v${t.txt?' txt':''}">${t.v}</div><div class="sub">${t.sub}</div></div>`).join("");
 
 /* workout index — newest first. Append future workouts here. */
 const WORKOUTS=[
-  {date:"Thu · Jul 30, 2026", name:"3 RFT · Rope / AbMat / Bike", status:"planned",
-   prescription:"75 jump rope · 25 AbMat sit-ups · 25 cal Echo bike", res:"—", rl:"planned",
+  {date:"Thu · Jul 30, 2026", name:"3 RFT · Rope / AbMat / Bike", status:"completed",
+   prescription:"75 jump rope · 25 AbMat sit-ups · 25 cal Echo bike", res:"14:54", rl:"3 rds · Rx'd",
    href:"2026-07-30-triplet.html"},
   {date:"Tue · Jul 28, 2026", name:"McGhee", badge:"Hero WOD", status:"completed",
    prescription:"5 Deadlifts 135 · 13 Push-ups · 9 Box Jumps 24\"", res:"286", rl:"reps · 10 rds",
@@ -151,7 +151,7 @@ document.getElementById("wolist").innerHTML = WORKOUTS.map(w=>`
 const HISTORY={monthly:[["Aug '24",13],["Sep",19],["Oct",18],["Nov",11],["Dec",9],
   ["Jan '25",11],["Feb",10],["Mar",5],["Apr",19],["May",21],["Jun",11],["Jul",6],
   ["Aug",6],["Sep",1],["Oct",1],["Nov",3],["Dec",1],
-  ["Jan '26",8],["Feb",0],["Mar",8],["Apr",10],["May",0],["Jun",1],["Jul",20]]};
+  ["Jan '26",8],["Feb",0],["Mar",8],["Apr",10],["May",0],["Jun",1],["Jul",21]]};
 function drawHistory(){
   const s=clear("histChart"),W0=1040,H=300,L=30,R=14,T=14,B=52;
   const d=HISTORY.monthly, n=d.length, yMax=24;
