@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gameplan · Rope / AbMat / Bike — Kyle Garzia</title>
+<style>
+  :root{
+    color-scheme: light dark;
+    --surface-1:#fcfcfb; --page:#f9f9f7;
+    --text-primary:#0b0b0b; --text-secondary:#52514e; --muted:#898781;
+    --grid:#e1e0d9; --baseline:#c3c2b7; --border:rgba(11,11,11,0.10);
+    --rope:#4a3aa7; --ab:#1baf7a; --bike:#2a78d6;
+    --good:#0ca30c; --warn:#fab219; --crit:#d03b3b; --success-text:#006300;
+    --card-shadow:0 1px 2px rgba(11,11,11,.05),0 1px 12px rgba(11,11,11,.04);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:where(:not([data-theme="light"])){
+      --surface-1:#1a1a19; --page:#0d0d0d;
+      --text-primary:#fff; --text-secondary:#c3c2b7; --muted:#898781;
+      --grid:#2c2c2a; --baseline:#383835; --border:rgba(255,255,255,0.10);
+      --rope:#9085e9; --ab:#199e70; --bike:#3987e5;
+      --good:#0ca30c; --warn:#fab219; --crit:#d03b3b; --success-text:#0ca30c;
+      --card-shadow:0 1px 2px rgba(0,0,0,.4),0 1px 14px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --surface-1:#1a1a19; --page:#0d0d0d;
+    --text-primary:#fff; --text-secondary:#c3c2b7; --muted:#898781;
+    --grid:#2c2c2a; --baseline:#383835; --border:rgba(255,255,255,0.10);
+    --rope:#9085e9; --ab:#199e70; --bike:#3987e5;
+    --good:#0ca30c; --warn:#fab219; --crit:#d03b3b; --success-text:#0ca30c;
+    --card-shadow:0 1px 2px rgba(0,0,0,.4),0 1px 14px rgba(0,0,0,.35);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--page); color:var(--text-primary);
+    font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased; line-height:1.5; padding:28px 20px 64px;}
+  .wrap{max-width:1080px;margin:0 auto}
+  .backlink{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--muted);text-decoration:none;margin-bottom:14px}
+  .backlink:hover{color:var(--text-primary)}
+  header.top{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;flex-wrap:wrap;margin-bottom:6px}
+  h1{font-size:15px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:0}
+  .wod-title{font-size:26px;font-weight:750;margin:2px 0 2px;letter-spacing:-.01em;display:flex;align-items:center;gap:11px;flex-wrap:wrap}
+  .meta{color:var(--text-secondary);font-size:14px}
+  .meta b{color:var(--text-primary);font-weight:600}
+  .badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 11px;border-radius:999px}
+  .badge.planned{background:color-mix(in srgb,var(--warn) 22%,transparent);color:#8a5a00}
+  :root[data-theme="dark"] .badge.planned{color:var(--warn)}
+  .toggle{border:1px solid var(--border);background:var(--surface-1);color:var(--text-secondary);border-radius:999px;padding:7px 14px;font-size:13px;cursor:pointer;font-family:inherit}
+  .toggle:hover{color:var(--text-primary)}
+  .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin:22px 0}
+  .tile{background:var(--surface-1);border:1px solid var(--border);border-radius:14px;padding:16px 18px;box-shadow:var(--card-shadow)}
+  .tile .k{font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .tile .v{font-size:30px;font-weight:750;margin-top:4px;letter-spacing:-.02em;color:var(--muted)}
+  .tile .sub{font-size:12.5px;color:var(--text-secondary);margin-top:3px}
+  .card{background:var(--surface-1);border:1px solid var(--border);border-radius:16px;padding:20px 22px 18px;box-shadow:var(--card-shadow);margin-bottom:18px}
+  .card h2{font-size:15px;font-weight:700;margin:0 0 4px}
+  .card p.lead{font-size:14px;color:var(--text-secondary);margin:0 0 6px}
+  .sectlabel{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:34px 0 12px}
+  .rule{background:color-mix(in srgb,var(--bike) 9%,var(--surface-1));border:1px solid color-mix(in srgb,var(--bike) 32%,var(--border));border-radius:16px;padding:18px 20px;font-size:15px;margin-bottom:18px}
+  .rule .lbl{font-size:11px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--bike);margin-bottom:5px}
+  .rule b{color:var(--text-primary)}
+  .checklist{list-style:none;padding:0;margin:0}
+  .checklist li{position:relative;padding:7px 0 7px 26px;font-size:14px;color:var(--text-secondary);border-bottom:1px solid var(--grid)}
+  .checklist li:last-child{border-bottom:0}
+  .checklist li:before{content:"○";position:absolute;left:2px;top:7px;color:var(--muted);font-size:15px}
+  .checklist li b{color:var(--text-primary);font-weight:650}
+  .gp-move{padding:13px 0;border-bottom:1px solid var(--grid)}
+  .gp-move:last-child{border-bottom:0}
+  .gp-move .mh{font-size:14px;font-weight:700;margin:0 0 3px;display:flex;align-items:center;gap:8px}
+  .gp-move .mh .dot{width:10px;height:10px;border-radius:3px;display:inline-block}
+  .gp-move p{margin:0;font-size:13.5px;color:var(--text-secondary)}
+  .tcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+  .tcard{background:var(--surface-1);border:1px solid var(--border);border-radius:14px;padding:15px 17px;box-shadow:var(--card-shadow);border-left:3px solid var(--bike)}
+  .tcard .k{font-size:12px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .tcard .v{font-size:19px;font-weight:750;margin:5px 0 3px;letter-spacing:-.01em}
+  .tcard .sub{font-size:12.5px;color:var(--text-secondary)}
+  .takeaway{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--grid)}
+  .takeaway:last-child{border-bottom:0}
+  .takeaway p{margin:0;font-size:13.5px;color:var(--text-secondary)}
+  .takeaway p b{color:var(--text-primary);font-weight:650}
+  .pill{flex:0 0 auto;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 9px;border-radius:999px;height:fit-content;margin-top:1px}
+  .pill.flag{background:color-mix(in srgb,var(--warn) 22%,transparent);color:#8a5a00}
+  .pill.ok{background:color-mix(in srgb,var(--good) 16%,transparent);color:var(--success-text)}
+  .pill.info{background:color-mix(in srgb,var(--bike) 16%,transparent);color:var(--bike)}
+  :root[data-theme="dark"] .pill.flag{color:var(--warn)}
+  .placeholder{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:120px;border:1.5px dashed var(--grid);border-radius:14px;color:var(--muted);font-size:13.5px;text-align:center;padding:22px;gap:4px}
+  .placeholder .big{font-size:15px;font-weight:650;color:var(--text-secondary)}
+  .foot{margin-top:30px;color:var(--muted);font-size:12px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="backlink" href="index.html">‹ Overview</a>
+  <header class="top">
+    <div>
+      <h1>Kyle Garzia · Gameplan</h1>
+      <div class="wod-title">3 RFT · Rope / AbMat / Bike <span class="badge planned">Planned</span></div>
+      <div class="meta">Thu · July 30, 2026 · Hungry Dogs Palo Alto · Linchpin "Wild Card"<br>
+        <b>Your version:</b> 3 rounds for time — 75 jump rope (any style) · 25 AbMat sit-ups · 25 cal Echo bike</div>
+    </div>
+    <button class="toggle" id="themeBtn">◐ Theme</button>
+  </header>
+
+  <div class="tiles">
+    <div class="tile"><div class="k">Total time</div><div class="v">—</div><div class="sub">awaiting results</div></div>
+    <div class="tile"><div class="k">R3 vs R1 bike</div><div class="v">—</div><div class="sub">even-pace test</div></div>
+    <div class="tile"><div class="k">Avg / Max HR</div><div class="v">—</div><div class="sub">awaiting results</div></div>
+    <div class="tile"><div class="k">RPE</div><div class="v">—</div><div class="sub">1–10, post-workout</div></div>
+  </div>
+
+  <div class="sectlabel">Coach's gameplan</div>
+  <div class="rule">
+    <div class="lbl">The one rule</div>
+    <b>The bike is the dial.</b> Pick a calorie pace you can <b>repeat three times</b> and hold it. This is the McGhee lesson applied — you sandbagged that middle and had a gear left at the end. Even beats fast. Moderate and repeatable on rounds 1–2, then empty the tank on the round-3 bike.
+  </div>
+
+  <div class="card">
+    <h2>Before you start</h2>
+    <ul class="checklist">
+      <li><b>Connect the Echo bike over Bluetooth</b> so Tempus counts your calories — that's your one hard data stream today.</li>
+      <li><b>Rope out a few reps</b> to find your rhythm and let the Achilles / calves warm in before round 1.</li>
+      <li><b>Tap promptly at each transition</b> so the rope → sit-up → bike splits stay clean (splits are tap-driven, not auto-counted).</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>How to run each piece</h2>
+    <div class="gp-move">
+      <div class="mh"><span class="dot" style="background:var(--rope)"></span>75 Jump rope — any style</div>
+      <p>Smooth and continuous, unbroken or 25/25/25. Land soft and midfoot. This is the only spot your limiters live — if the Achilles or calves start talking, break to smaller sets rather than pushing through. No sprinting; it's not where the workout is won.</p>
+    </div>
+    <div class="gp-move">
+      <div class="mh"><span class="dot" style="background:var(--ab)"></span>25 AbMat sit-ups</div>
+      <p>Steady, unbroken, anchor your feet. Treat this as your relative rest between the two engine pieces — don't spike your heart rate here.</p>
+    </div>
+    <div class="gp-move">
+      <div class="mh"><span class="dot" style="background:var(--bike)"></span>25 cal Echo bike</div>
+      <p>The lever. Moderate and repeatable rounds 1–2, then empty the tank on round 3. This is where you spend whatever you've got left — and the one segment with real counted data.</p>
+    </div>
+  </div>
+
+  <div class="sectlabel">Targets — I'll grade these after</div>
+  <div class="tcards">
+    <div class="tcard"><div class="k">Total time</div><div class="v">14–17 min</div><div class="sub">controlled aerobic effort · sub-13 only if you consciously race the bike</div></div>
+    <div class="tcard"><div class="k">Even-pace test</div><div class="v">R3 bike within ~15s of R1</div><div class="sub">real Echo data, not taps — the test McGhee failed</div></div>
+    <div class="tcard"><div class="k">Effort</div><div class="v">Repeatable, not redlined</div><div class="sub">hold a pace you could do a 4th round of</div></div>
+  </div>
+
+  <div class="sectlabel">Limiter watch</div>
+  <div class="card">
+    <div class="takeaway"><span class="pill flag">Watch</span><p><b>Jump-rope impact is the one flag.</b> 225 total ground contacts on a recently-returned Achilles / knees. Land soft, and break the rope to 25/25/25 if the calves or Achilles talk. This is the injury-relevant load today — not the sit-ups or bike.</p></div>
+    <div class="takeaway"><span class="pill ok">Safe</span><p><b>AbMat over GHD protects your back</b> — and your history backs it: no GHD sit-ups since 2020. Correct call.</p></div>
+    <div class="takeaway"><span class="pill ok">Safe</span><p><b>Shoulder load is minimal</b> here. No overhead, no pressing.</p></div>
+  </div>
+
+  <div class="sectlabel">History with these movements</div>
+  <div class="card">
+    <div class="takeaway"><span class="pill info">Rope</span><p>Last double-unders were <b>June 2025 — 14 months ago</b>. Any-style singles is the smart call; Rx DUs would just mean trip-ups.</p></div>
+    <div class="takeaway"><span class="pill info">Sit-ups</span><p>No GHD since <b>July 2020 (6 years)</b> — hence the AbMat swap. Sit-ups in general are well within reach (106 sessions).</p></div>
+    <div class="takeaway"><span class="pill info">Bike</span><p>Your strength here: <b>66 bike sessions, 6 in July alone</b>. The pacing lever is also your best-grooved movement — trust it.</p></div>
+    <div class="takeaway"><span class="pill info">This combo</span><p>Rope + sit-up + bike has come up <b>3 times</b> before (2024–2025). No Tempus round data on those, so today is the first clean baseline for the pattern.</p></div>
+  </div>
+
+  <div class="sectlabel">Plan vs actual</div>
+  <div class="card" style="margin-top:0">
+    <div class="placeholder"><span class="big">Populated after you train</span>Upload your Tempus screenshots (or a quick RPE + splits debrief) and each target above gets graded — planned vs actual, hit or miss.</div>
+  </div>
+
+  <div class="sectlabel">Athlete notes</div>
+  <div class="card" style="margin-top:0">
+    <div class="placeholder"><span class="big">Your voice goes here</span>How did it feel, where did you break, what surprised you? Send it over after and I'll add it alongside the coaching analysis.</div>
+  </div>
+
+  <div class="foot">Planned · awaiting results · Linchpin programming (Pat Sherwood)</div>
+</div>
+
+<script>
+document.getElementById("themeBtn").addEventListener("click",()=>{
+  const cur=document.documentElement.getAttribute("data-theme");
+  const mqDark=window.matchMedia("(prefers-color-scheme: dark)").matches;
+  document.documentElement.setAttribute("data-theme", cur ? (cur==="dark"?"light":"dark") : (mqDark?"light":"dark"));
+});
+</script>
+</body>
+</html>
